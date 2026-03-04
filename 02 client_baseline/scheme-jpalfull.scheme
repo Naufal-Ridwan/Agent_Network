@@ -1,0 +1,78 @@
+// jpal sea graph scheme
+// based on "unclutter scheme" by Gray Kimbrough
+// gray.kimbrough@gmail.com
+
+// Based off of s2color scheme, which hopefully will not change
+#include s2color
+// Sequence number to put it above Stata schemes
+sequence 1110
+// Label to identify this scheme
+label "jpal graphs"
+
+// Bar and line color choices
+color p1      "227 89 37"
+color p2	  "47 170 159"
+color p3      "97 183 127"
+color p4      "244 195 0"
+color p5      "45 97 110"
+color p6      "145 145 145"	
+color p7      "145 208 202"
+color p8      "169 215 185"
+color p9      "249 218 136"
+color p10     "141 168 174"
+
+// Non-color settings
+// Most significantly:
+//  * a very small but non-zero margin within the axes
+//    (remove this padding by replacing 'vsmall' with 'zero',
+//        or make larger with other sizes)
+//  * thicker lines
+//  * horizontal labeling of vertical axis
+//  * Do not display the legend (label the lines or bars instead!)
+margin        twoway          vsmall
+linewidth     p               medthick
+anglestyle    vertical_tick   horizontal
+symbolsize    p               vsmall
+linewidth     pbar            vvvthin
+
+
+// Remove grid and set all background colors to white
+color grid                white
+color major_grid          white
+color background          white
+color plotregion          white
+color plotregion_line     white
+color matrix_plotregion   white
+
+// Set most other elements to black
+color matplotregion_line  black
+color foreground          black
+color symbol              black
+color text                black
+color body                black
+color small_body          black
+color heading             black
+color subheading          black
+color axis_title          black
+color matrix_label        black
+color label               black
+color key_label           black
+color tick_label          black
+color tick_biglabel       black
+color matrix_marklbl      black
+color sts_risk_label      black
+color sts_risk_title      black
+color text_option         black
+color text_option_line    black
+color filled_text         black
+color axisline            black
+color tick                black
+color minortick           black
+color refmarkline         black
+color dotmarkline         black
+color dots                black
+color matplotregion_line  black
+color legend_line         black
+color clegend_line        black
+color zyx2                black
+color sunflowerdf         black
