@@ -41,3 +41,74 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 ******************
 
 import excel "$raw/raw_client_midline_`date'.xlsx", sheet("Sheet0") firstrow
+
+*******************
+** DATA CLEANING **
+*******************
+
+** #1. Rename and revised variable name
+        ren *, lower
+
+        * Drop the first row since it's now in labels
+        drop in 1
+
+        * Rename every variable to its label;
+        * add "q_" ONLY if the label starts with a number.
+        ds
+        foreach v of varlist `r(varlist)' {
+        local lbl : variable label `v'
+        if "`lbl'" == "" continue
+
+        * does the label start with a digit?
+        if regexm("`lbl'","^[0-9]") {
+        local new = strtoname("q_`lbl'")
+        }
+        else {
+        local new = strtoname("`lbl'")
+        }
+
+        * skip if name wouldn't change
+        if "`new'" == "`v'" continue
+
+        * avoid collisions
+        capture confirm variable `new'
+        if _rc==0 {
+                di as err "skip: `v' -> `new' (already exists)"
+                continue
+        }
+
+        rename `v' `new'
+        }
+** #2. Generating Date and Time Variables
+
+        * Parse the string to a proper datetime, then split date & time
+        rename startdate startdatetime_str
+        rename enddate enddatetime_str
+
+        gen double st_dt = clock(startdatetime_str, "MDY hm")
+        replace    st_dt = clock(startdatetime_str, "DMY hm") if missing(st_dt)   // use if data were DMY
+        gen double et_dt = clock(enddatetime_str, "MDY hm")
+        replace    et_dt = clock(enddatetime_str, "DMY hm") if missing(et_dt)   // use if data were DMY
+
+        * Date only
+        gen int startdate = dofc(st_dt)
+        format startdate %tdCCYY-NN-DD    // e.g., 2025-08-05
+        gen int enddate = dofc(et_dt)
+        format enddate %tdCCYY-NN-DD    // e.g., 2025-08-05
+
+        * Time only (milliseconds since midnight; displayed as HH:MM)
+        gen double starttime = mod(st_dt, 24*60*60*1000)
+        format starttime %tcHH:MM         // e.g., 03:33
+        gen double endtime = mod(et_dt, 24*60*60*1000)
+        format endtime %tcHH:MM         // e.g., 03:33
+
+        * Optional: clean up
+        drop st_dt et_dt startdatetime_str enddatetime_str
+        order startdate starttime enddate endtime
+
+        la var startdate "Start Date"
+        la var starttime "Start Time"
+        la var enddate "End Date"
+        la var endtime "End Time"
+
+** #3. Generate
