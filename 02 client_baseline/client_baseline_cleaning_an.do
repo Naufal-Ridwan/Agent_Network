@@ -47,7 +47,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 *******************************************
 *import excel "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFII Agent Banking Network (BM)/06 Data/c Full-Scale/06 Survey Data/rawresponses/raw_client_baseline_02022026", sheet("Sheet0") firstrow
 
-import excel "$raw/raw_client_baseline_23022026.xlsx", sheet("Sheet0") firstrow
+import excel "$raw/raw_client_baseline_09032026.xlsx", sheet("Sheet0") firstrow
 
 *import excel "/Users/athonaufalridwan/Downloads/01. J-PAL SEA/Random File/AN/client/raw_client_baseline_26012026.xlsx", sheet("Sheet0") firstrow clear
 
@@ -497,8 +497,8 @@ lab var total_duration "Duration (in minutes)"
 
 rename externalreference unique_code_client
 
-append using "$dta/cleaned_baseline_client_survey_16022026_temp.dta", force
+append using "$dta/cleaned_baseline_client_survey_23022026_temp.dta", force
 
 **#14. Save cleaned data
-save "$dta/cleaned_baseline_client_survey_23022026_temp.dta", replace
+save "$dta/cleaned_baseline_client_survey_`date'.dta", replace
 *export delimited using "$dta/cleaned_baseline_client_survey_`date'.csv", replace

@@ -49,9 +49,9 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") // this is the default code, it 
 *************
 *IMPORT DATA*
 *************
-use "$dta/cleaned_baseline_agent_survey_`date'", clear  
+use "$dta/cleaned_baseline_agent_survey_09032026", clear  
 
-*Defining signal values
+/*Defining signal values
 
 gen signal = .
 
@@ -110,7 +110,7 @@ gen expected_down = (signal_prior < 0) // if the number is -
 
 gen treat_expected_up          = expected_up   * info_treat
 gen treat_expected_down        = expected_down * info_treat
-
+*/
 
 preserve
 
@@ -272,10 +272,6 @@ stats(num_obs strata mean fstat, label("Observations" "Strata fixed effects" "Me
         title("\text{First stage results}") mlabels(none) nonum ///
         postfoot(`"\bottomrule"' `"\end{tabular}"' `"\begin{tablenotes}"' `"\setlength\labelsep{0pt}"' `"\item \textit{Note:} `note' "' `"\end{tablenotes}"' `"\end{table}"') ///
         stats(num_obs strata dv_mean, label("Observations" "Strata fixed effects" "Mean of dependent variable") fmt(%15.0fc 0 0))
-
-
-0
-
 
 
 restore

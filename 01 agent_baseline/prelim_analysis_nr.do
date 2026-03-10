@@ -143,6 +143,8 @@ keep if treatment_status == 2 | treatment_status == 3
 			All specifications control for strata fixed effects." ;
 	#delimit cr
 	
+        capture mkdir "$output/Agent Baseline - `date'/prelim_analysis" 
+
 	esttab tab_1a using "$output/Agent Baseline - `date'/prelim_analysis/tab_1a.tex", replace ///
         style(tex) booktabs ///
         cells(b(fmt(3) star) se(par fmt(3))) ///
@@ -180,7 +182,8 @@ keep if treatment_status == 2 | treatment_status == 3
                         The main explanatory variables are a dummy which indicates if signal-prior is positive or negative.
                         All specifications control for strata fixed effects." ;
         #delimit cr
-        
+        capture mkdir "$output/Agent Baseline - `date'/prelim_analysis" 
+
         esttab tab_1b using "$output/Agent Baseline - `date'/prelim_analysis/tab_1b.tex", replace ///
         style(tex) booktabs ///
         cells(b(fmt(3) star) se(par fmt(3))) ///

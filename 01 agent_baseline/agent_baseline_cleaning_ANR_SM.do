@@ -473,7 +473,7 @@ gen log_signal_per_prior    = ln(signal_per_prior)
 destring strata, force replace
 
 
-append using "$dta/02 agent_baseline/cleaned_baseline_agent_survey_23022026.dta"
+append using "$dta/02 agent_baseline/cleaned_baseline_agent_survey_02032026.dta"
 
 
 
