@@ -52,7 +52,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 *******************************************
 // import excel "/Users/athonaufalridwan/Downloads/JPAL/AN/raw/raw_agent_baseline_090125.xlsx", sheet("Sheet0") firstrow
 
-import excel "$raw/raw_agent_baseline_`date'.xlsx", sheet("Sheet0") firstrow
+import excel "$raw/02 agent_baseline/raw_agent_baseline_`date'.xlsx", sheet("Sheet0") firstrow
 
 ********************************************
 **----------------CLEANING----------------**
@@ -473,7 +473,7 @@ gen log_signal_per_prior    = ln(signal_per_prior)
 destring strata, force replace
 
 
-append using "$dta/02 agent_baseline/cleaned_baseline_agent_survey_02032026.dta"
+append using "$dta/02 agent_baseline/cleaned_baseline_agent_survey_09032026.dta"
 
 
 

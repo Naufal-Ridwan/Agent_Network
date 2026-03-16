@@ -59,7 +59,7 @@ export excel using "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL I
 
 *********************************
 **-------CLIENT RESPONDENTS-----**
-use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_09032026.dta", clear 
+use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_16032026.dta", clear 
 	duplicates drop unique_code_agent, force
 	tempfile agent_response
 	save `agent_response'
@@ -103,8 +103,9 @@ import delimited "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFI
     drop _merge
     drop strata treatment_status agent_status total_respon_per_agen
     
-    *Generating number of clients per agent
+   *Generating number of clients per agent
     bysort unique_code_agent: gen num = _n
-    keep if num <30 // we only want to include agents with less than 30 clients, since the survey is only sent to 30 clients per agent. This is to avoid including agents who have more than 30 clients but only a few of them are included in the survey, which could lead to bias in the results.
-    drop num
-*export excel using "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFII Agent Banking Network (BM)/06 Data/c Full-Scale/10 Respondent List/(daftar penerima) mdab_jpalsea_survei_agen_pengingat_keempat_`date'.xlsx", firstrow(variables) replace
+    keep if num <100 // we only want to include agents with less than 30 clients, since the survey is only sent to 30 clients per agent. This is to avoid including agents who have more than 30 clients but only a few of them are included in the survey, which could lead to bias in the results.
+    drop num unique_code_agent
+    rename unique_code_client kode_unik_survei_nasabah
+export excel using "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFII Agent Banking Network (BM)/06 Data/c Full-Scale/10 Respondent List/(daftar penerima) mdab_jpalsea_survei_nasabah_pengingat_kedua_`date'.xlsx", firstrow(variables) replace
