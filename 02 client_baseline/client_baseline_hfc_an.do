@@ -44,7 +44,7 @@ shell mkdir "$output/Client Baseline - `date'"
 *************
 *IMPORT DATA*
 *************
-use "$dta/cleaned_baseline_client_survey_16022026.dta", clear 
+use "$dta/cleaned_baseline_client_survey_17032026.dta", clear 
 
 set more off
 set scheme plotplain
@@ -1196,8 +1196,7 @@ preserve
 restore
 *** q_3c_1_1
 preserve
-
-	drop if q_3c_1_1 == .
+	drop if q_3c_1_1_1 == .
 	
 	qui sum clients_n
 	return list
@@ -1791,7 +1790,7 @@ restore
 *** q_10f
 preserve
 
-	drop if q_10f == . 
+	drop if q_10f == " "
 	destring q_10f, replace
 	local x = 1
 	forval nmr = 1/2 {
@@ -1819,12 +1818,13 @@ restore
 *** q_10g
 preserve
 
+	drop if q_10g == "Transfer "
 	local date : display %tdDNCY daily("$S_DATE", "DMY")
 	capture shell mkdir -p "$output/Agent Baseline - `date'"
 
 	** Drop missing variable (if any)
 	destring q_10g, replace
-	drop if q_10g == .
+	
 
 	** Summary statistics
 	qui summarize q_10g, detail
@@ -1897,6 +1897,7 @@ preserve
 *** q_11a
 
 	drop if q_11a == .
+	destring q_11a, replace
 	local date : display %tdDNCY daily("$S_DATE", "DMY")
 	capture shell mkdir -p "$output/Agent Baseline - `date'"
 	

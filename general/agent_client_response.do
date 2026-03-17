@@ -46,12 +46,12 @@ use "$dta/01 client_baseline/cleaned_baseline_client_survey_09022026.dta", clear
 
 
 *** Using Client dataset
-use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_09032026.dta", clear 
+use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_16032026.dta", clear 
 	duplicates drop unique_code_agent, force
 	tempfile agent_response
 	save `agent_response'
 	
-use "$dta/01 client_baseline/cleaned_baseline_client_survey_23022026.dta", clear
+use "$dta/01 client_baseline/cleaned_baseline_client_survey_17032026.dta", clear
 
 	rename unique_code_client unique_code_nasabah
 	duplicates drop unique_code_nasabah, force
@@ -59,7 +59,9 @@ use "$dta/01 client_baseline/cleaned_baseline_client_survey_23022026.dta", clear
 	save `client_response'
 	
 	
-use "$path/10 Respondent List/contact_list_clients_final.dta", clear
+import delimited "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFII Agent Banking Network (BM)/06 Data/c Full-Scale/09 Contact List/contact_list_clients_final_v2.csv", clear    
+	rename kode_unik_survei_agen unique_code_agent
+	rename externaldatareference unique_code_client
 	keep unique_code_agent unique_code_client cust_code_agen cust_code_nasabah
 	rename unique_code_client unique_code_nasabah
 	merge 1:1 unique_code_nasabah using `client_response'
@@ -162,14 +164,13 @@ preserve
     cells("b(fmt(%9.0fc)) pct(fmt(%9.2f))") ///
     nonumber noobs ///
     booktabs ///
-    prehead(`"\begin{table}[h]\centering"' ///
+    prehead(`"\begin{table}[H]\centering"' ///
             `"\caption{Agents with at least one client response}"' ///
             `"\begin{tabular}{lcc}"' ///
             `"\toprule"' ///
             `"Treatment status & Number of agents & Percentage of agents\\"' ///
             `"\midrule"') ///
     postfoot(`"\midrule"' ///
-             `"\bottomrule"' ///
              `"\end{tabular}"' ///
              `"\end{table}"')
 	
@@ -183,14 +184,13 @@ preserve
     cells("b(fmt(%9.0fc)) pct(fmt(%9.2f))") ///
     nonumber noobs ///
     booktabs ///
-    prehead(`"\begin{table}[h]\centering"' ///
+    prehead(`"\begin{table}[H]\centering"' ///
             `"\caption{Agents with at least two client response}"' ///
             `"\begin{tabular}{lcc}"' ///
             `"\toprule"' ///
             `"Treatment status & Number of agents & Percentage of agents \\"' ///
             `"\midrule"') ///
     postfoot(`"\midrule"' ///
-             `"\bottomrule"' ///
              `"\end{tabular}"' ///
              `"\end{table}"')
 
@@ -204,14 +204,13 @@ preserve
     cells("b(fmt(%9.0fc)) pct(fmt(%9.2f))") ///
     nonumber noobs ///
     booktabs ///
-    prehead(`"\begin{table}[h]\centering"' ///
+    prehead(`"\begin{table}[H]\centering"' ///
             `"\caption{Agents with at least three client response}"' ///
             `"\begin{tabular}{lcc}"' ///
             `"\toprule"' ///
             `"Treatment status & Number of clients & Percentage of agents \\"' ///
             `"\midrule"') ///
     postfoot(`"\midrule"' ///
-             `"\bottomrule"' ///
              `"\end{tabular}"' ///
              `"\end{table}"')
 			 
@@ -231,14 +230,10 @@ preserve
             `"Treatment status & Number of clients & Percentage of agents \\"' ///
             `"\midrule"') ///
     postfoot(`"\midrule"' ///
-             `"\bottomrule"' ///
              `"\end{tabular}"' ///
              `"\end{table}"')
 			 
 			 
-restore
-* Generate cumulative indicators
-preserve
 
 	capture mkdir "$output/Agent-Client_`date'"
 
@@ -264,27 +259,27 @@ preserve
 		cells("C") ///
 		nonumber noobs ///
 		booktabs ///
-		prehead(`"\begin{table}[h]\centering"' ///
+		prehead(`"\begin{table}[H]\centering"' ///
 				`"\caption{Agent responses by treatment status}"' ///
 				`"\begin{tabular}{lcccc}"' ///
 				`"\toprule"' ///
 				`"Treatment status & Zero & Min 1 & Min 2 & Min 3+ \\"' ///
 				`"\midrule"') ///
 		postfoot(`"\midrule"' ///
-				`"\bottomrule"' ///
 				`"\end{tabular}"' ///
 				`"\end{table}"')
-preserve			 
-***===================GENERATING AGENT WITH ZERO CLIENT RESPONSE===========================***
-restore
 
-	keep if total_respon_per_agen == 0
+
+	keep if total_respon_per_agen ==0
 	keep unique_code_agent	
 	tempfile agen_zeroresponse_client
 	save `agen_zeroresponse_client'
 	
 	
-	use "/$path/10 Respondent List/contact_list_clients_final.dta", clear
+	import delimited "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFII Agent Banking Network (BM)/06 Data/c Full-Scale/09 Contact List/contact_list_clients_final_v2.csv", clear    
+	rename kode_unik_survei_agen unique_code_agent
+	rename externaldatareference unique_code_client
+
 	keep unique_code_agent unique_code_client cust_code_agen cust_code_nasabah
 	rename unique_code_client unique_code_nasabah
 	merge m:1 unique_code_agent using `agen_zeroresponse_client'

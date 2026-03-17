@@ -28,7 +28,7 @@ gl do            "$path/06 Survey Data/dofiles/03 agent_endline"
 gl dta           "$path/06 Survey Data/dtafiles"
 gl log           "$path/06 Survey Data/logfiles"
 gl output        "$path/06 Survey Data/output"
-gl raw           "$path/06 Survey Data/rawresponses"
+gl raw           "$path/06 Survey Data/rawresponses/04 agent_endline"
 
 
 * Set local date
@@ -46,7 +46,7 @@ import excel "$raw/raw_agent_endline_`date'.xlsx", sheet("Sheet0") firstrow
 *****************
 
 ** #1. Rename and revised variable name
-        ren *, lower
+ren *, lower
 
         * Drop the first row since it's now in labels
         drop in 1
@@ -81,6 +81,7 @@ import excel "$raw/raw_agent_endline_`date'.xlsx", sheet("Sheet0") firstrow
 ** #2. Generating Date and Time Variables
 
         * Parse the string to a proper datetime, then split date & time
+        ren *, lower
         rename startdate startdatetime_str
         rename enddate enddatetime_str
 
@@ -109,6 +110,8 @@ import excel "$raw/raw_agent_endline_`date'.xlsx", sheet("Sheet0") firstrow
         la var starttime "Start Time"
         la var enddate "End Date"
         la var endtime "End Time"
+
+        
 
 ** #3. Generate
 *tbc

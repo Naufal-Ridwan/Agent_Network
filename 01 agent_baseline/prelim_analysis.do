@@ -37,7 +37,7 @@ gl do            "$path/dofiles/agent_baseline"
 gl dta           "$path/dtafiles/02 agent_baseline"
 gl log           "$path/logfiles"
 gl output        "$path/output"
-gl raw           "$path/rawresponses/agent_baseline"
+gl raw           "$path/rawresponses/02 agent_baseline"
 
 ***IMPORTANT***
 
@@ -49,7 +49,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") // this is the default code, it 
 *************
 *IMPORT DATA*
 *************
-use "$dta/cleaned_baseline_agent_survey_09032026", clear  
+use "$dta/cleaned_baseline_agent_survey_16032026", clear  
 
 /*Defining signal values
 
