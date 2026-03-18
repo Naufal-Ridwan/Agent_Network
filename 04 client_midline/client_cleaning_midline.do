@@ -25,7 +25,7 @@ if "`c(username)'" == "athonaufalridwan" {
 }
  
 * Set the path
-gl do            "$path/06 Survey Data/dofiles/03 agent_endline"
+gl do            "$path/06 Survey Data/dofiles/04 client_midline"
 gl dta           "$path/06 Survey Data/dtafiles"
 gl log           "$path/06 Survey Data/logfiles"
 gl output        "$path/06 Survey Data/output"
@@ -40,7 +40,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 ** IMPORT DATA **
 ******************
 
-import excel "$raw/raw_client_midline_`date'.xlsx", sheet("Sheet0") firstrow
+import excel "$raw/03 client_midline/raw_client_midline_`date'.xlsx", sheet("Sheet0") firstrow
 
 *******************
 ** DATA CLEANING **
