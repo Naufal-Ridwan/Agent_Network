@@ -284,11 +284,15 @@ set scheme plotplain
 
 // Treatment 1
 
+cap mkdir "temp"
+
 preserve
-binscatter posterior_prior signal_prior if treatment_status==1, msymbol(circle) savedata("temp/binned_treatment_1") replace line(none) nquantiles(40)
+        binscatter posterior_prior signal_prior if treatment_status==1, msymbol(circle) savedata("temp/binned_treatment_1") replace line(none) nquantiles(40)
 clear
-qui do "temp/binned_treatment_1"
-save "temp/binned_treatment_1",replace
+
+        import delimited "temp/binned_treatment_1.csv", clear
+        save "temp/binned_treatment_1",replace
+
 restore
 
 append using "temp/binned_treatment_1", gen(binned_treatment_1)
