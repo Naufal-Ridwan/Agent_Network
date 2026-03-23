@@ -45,11 +45,13 @@ import excel "$raw/04 agent_endline/raw_agent_endline_17032026.xlsx", sheet("She
 * DATA CLEANING *
 *****************
 
+
 ** #1. Rename and revised variable name
 ren *, lower
 
         * Drop the first row since it's now in labels
         drop in 1
+
 
         * Rename every variable to its label;
         * add "q_" ONLY if the label starts with a number.
@@ -78,6 +80,7 @@ ren *, lower
 
         rename `v' `new'
         }
+
 ** #2. Generating Date and Time Variables
 
         * Parse the string to a proper datetime, then split date & time
@@ -116,78 +119,10 @@ ren *, lower
         replace duration__in_seconds_ = round(duration__in_seconds_ / 60, .01)
         ren duration__in_seconds_ total_duration
         lab var total_duration "Durations (in minutes)"
+        format total_duration %9.2f
 
-** #4. Renaming labels
-        rename externalreference unique_code_agent
-        label variable unique_code_agent "Unique Code Agent"
-        rename informed_consent_1 informed_consent
-        label variable informed_consent "Informed Consent"
 
-        label variable q_1a "Do you display a price list with Bank Mandiri's official prices in your shop?"
-        label variable q_1b "How well do you think customers in your area are informed about the official fees for transactions set by Bank Mandiri?"
-        label variable q_1c "Branchless banking agents charge a fee for each transaction made with them. How do you set these fees?"
-        label variable q_1d "Do you charge all clients the same fee?"
-        label variable q_1d_1_1 "Family and friends:if not, Which types of customers do you charge the lowest fee?"
-        label variable q_1d_1_2 "High-value customers:if not, Which types of customers do you charge the lowest fee?"
-        label variable q_1d_1_3 "New customers:if not, Which types of customers do you charge the lowest fee?"
-        label variable q_1d_1_4 "Long-time customer:if not, Which types of customers do you charge the lowest fee?"
-        label variable q_1d_1_5 "Poorer customer:if not, Which types of customers do you charge the lowest fee?"
-        label variable q_1d_1_6 "Customer from local area:if not, Which types of customers do you charge the lowest fee?"
-        label variable q_1d_1_7 "Customer can easily do bus w/ other agents:if not, Which types of customers do you charge the lowest fee?"
-        label variable q_1e "How well do you think customers in your area are informed about the official fees for transactions set by Bank Mandiri?"
-
-        label variable q_2a "Over the last month, what share of your businesses' total revenues come from your branchless banking business?"
-        label variable q_2b "Do you also work as an agent for other banks, besides Bank Mandiri? "
-        label variable q_2c "Over the last month, what share of your branchless banking business' revenues come from your Bank Mandiri business?"
-
-        label variable q_3a "Last month, Bank Mandiri launched a marketing campaign in which messages advertising Mandiri Agen services were sent to all of your customers. Have any of your customers contacted you in response to these messages?"
-        label variable q_3a_1 "[If yes] Has the customer feedback to the messages been positive or negative?"
-        label variable q_3a_2 "Overall, would you say that these marketing messages advertising Mandiri Agen services to all your customers have helped you increase your business?"
-        label variable q_3b "Last month, you chose to participate in a Bank Mandiri marketing plan in which messages advertising Mandiri Agen services and prices were sent to all of your customers. Have any of your customers contacted you in response to these messages?"
-        label variable q_3b_1 "[If yes] Has the customer feedback to the messages been positive or negative?"
-        label variable q_3b_2 "Overall, would you say that these marketing messages advertising Mandiri Agen services and official prices to all your customers have helped you increase your business?"
-        label variable q_3c "Last month, you chose to participate in a Bank Mandiri marketing plan and received messages advertising Mandiri agen services and prices. Have you forwarded these marketing messages to your customers?"
-        label variable q_3c_1 "[If yes] To how many of your customers have you forwarded or shown these marketing messages?"
-        label variable q_3c_2_1 "Family and friends: [If yes] To which type of customer did you forward or show these marketing messages first?"
-        label variable q_3c_2_2 "High-value customers: [If yes] To which type of customer did you forward or show these marketing messages first?"
-        label variable q_3c_2_3 "New customers: [If yes] To which type of customer did you forward or show these marketing messages first?"
-        label variable q_3c_2_4 "Long-time customer: [If yes] To which type of customer did you forward or show these marketing messages first?"
-        label variable q_3c_2_5 "Poorer customer: [If yes] To which type of customer did you forward or show these marketing messages first?"
-        label variable q_3c_2_6 "Customer from local area: [If yes] To which type of customer did you forward or show these marketing messages first?"
-        label variable q_3c_2_7 "Customer can easily do bus w/ other agents: [If yes] To which type of customer did you forward or show these marketing messages
-
-        label variable q_3c_3 "[If yes] Has the customer feedback to the messages been positive or negative?"
-        label variable q_3d "Last month, Bank Mandiri launched a marketing plan in which messages advertising Mandiri Agen services and prices were sent to all of your customers. Have any of your customers contacted you in response to these messages?"
-        label variable q_3d_1 "[If yes] Has the customer feedback to the messages been positive or negative?"
-        label variable q_3d_2 "Overall, would you say that these marketing messages advertising Mandiri Agen services and official prices to all your customers have helped you increase your business?"
-        label variable q_3f "Overall, would you say that these marketing messages advertising Mandiri Agen services and official prices have helped you increase your business?"
-        
-        label variable q_4a "Over the last month, how much time did you spend advertising your branchless banking services to increase your business?"
-        label variable q_4b "Over the last month, how often have you approached customers to encourage them to do more branchless banking transactions? "
-        label variable q_4c_1 "Reduced fees charged per transaction: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_2 "Having longer business hours: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_3 "Offering the option to buy on credit: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_4 "Offering complementary services or products: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_5 "Having extra cash in hand: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_6 "Cleanliness premises: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_7 "Better customer service: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_8 "Create more trust among current and potential customers: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4c_9 "Proximity to customers (for instance, approaching customers): Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
-        label variable q_4d "Over the last month, how often do you approached customers with information about prices for BM transactions?"
-        label variable q_4e "Over the last month, how often do you approached potential new customers to encourage them to adopt Bank Mandiri financial products? "
-        label variable q_4f_1 "Through family contacts: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
-        label variable q_4f_2 "Strategic location and signage in front of the business: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
-        label variable q_4f_3 "Recommendations or referrals: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
-        label variable q_4f_4 "Traveling to or calling potential customers: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
-        label variable q_4f_5 "Advertising campaigns (radio, television, posters, flyers, etc.): Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
-        label variable q_4f_6 "Others: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
-        label variable q_4f_6_text "Others_text: [If yes] Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products? If others, please specify:"
-        
-        label variable q_5a "Since when have you been an agent for Bank Mandiri?"
-        label variable q_5b "What is your gender?"
-        label variable q_5c "When were you born?"
-
-** #5. Labelling variables
+** #4. Labelling variables
 
         *label define yes_no questions
         label define yes_no_lbl 0 "No" 1 "Yes"
@@ -226,7 +161,7 @@ ren *, lower
         label define compensation_option_lbl 1 "Indomaret" 2 "Alfamart" 3 "Tokopedia"
         label values compensation_option compensation_option_lbl
 
-***#6. Discrete option with mup to three answer
+***#5. Discrete option with mup to three answer
        
        *q_1d_1_1
        destring q_1d_1_1 q_1d_1_2 q_1d_1_3 q_1d_1_4 q_1d_1_5 q_1d_1_6 q_1d_1_7, replace
@@ -329,5 +264,62 @@ ren *, lower
         lab values q_4f_1_2 q_4f_lbl
         lab values q_4f_1_3 q_4f_lbl
         drop q_4f_1 q_4f_2 q_4f_3 q_4f_4 q_4f_5 q_4f_6
+
+** #6. Renaming labels
+        rename externalreference unique_code_agent
+        label variable unique_code_agent "Unique Code Agent"
+        rename informed_consent_1 informed_consent
+        label variable informed_consent "Informed Consent"
+
+        label variable q_1a "Do you display a price list with Bank Mandiri's official prices in your shop?"
+        label variable q_1b "How well do you think customers in your area are informed about the official fees for transactions set by Bank Mandiri?"
+        label variable q_1c "Branchless banking agents charge a fee for each transaction made with them. How do you set these fees?"
+        label variable q_1d "Do you charge all clients the same fee?"
+        label variable q_1d_1_1_1 "First choice: if not, Which types of customers do you charge the lowest fee?"
+        label variable q_1d_1_1_2 "Second choice: if not, Which types of customers do you charge the lowest fee?"
+        label variable q_1d_1_1_3 "Third choice: if not, Which types of customers do you charge the lowest fee?"
+        label variable q_1e "How well do you think customers in your area are informed about the official fees for transactions set by Bank Mandiri?"
+
+        label variable q_2a "Over the last month, what share of your businesses' total revenues come from your branchless banking business?"
+        label variable q_2b "Do you also work as an agent for other banks, besides Bank Mandiri? "
+        label variable q_2c "Over the last month, what share of your branchless banking business' revenues come from your Bank Mandiri business?"
+
+        label variable q_3a "Last month, Bank Mandiri launched a marketing campaign in which messages advertising Mandiri Agen services were sent to all of your customers. Have any of your customers contacted you in response to these messages?"
+        label variable q_3a_1 "[If yes] Has the customer feedback to the messages been positive or negative?"
+        label variable q_3a_2 "Overall, would you say that these marketing messages advertising Mandiri Agen services to all your customers have helped you increase your business?"
+        label variable q_3b "Last month, you chose to participate in a Bank Mandiri marketing plan in which messages advertising Mandiri Agen services and prices were sent to all of your customers. Have any of your customers contacted you in response to these messages?"
+        label variable q_3b_1 "[If yes] Has the customer feedback to the messages been positive or negative?"
+        label variable q_3b_2 "Overall, would you say that these marketing messages advertising Mandiri Agen services and official prices to all your customers have helped you increase your business?"
+        label variable q_3c "Last month, you chose to participate in a Bank Mandiri marketing plan and received messages advertising Mandiri agen services and prices. Have you forwarded these marketing messages to your customers?"
+        label variable q_3c_1 "[If yes] To how many of your customers have you forwarded or shown these marketing messages?"
+        label variable q_3c_2_1_1 "First choice: [If yes] To which type of customer did you forward or show these marketing messages first?"
+        label variable q_3c_2_1_2 "Second choice:[If yes] To which type of customer did you forward or show these marketing messages first?"
+        label variable q_3c_2_1_3 "Third choice: [If yes] To which type of customer did you forward or show these marketing messages first?"
+       
+        label variable q_3c_3 "[If yes] Has the customer feedback to the messages been positive or negative?"
+        label variable q_3d "Last month, Bank Mandiri launched a marketing plan in which messages advertising Mandiri Agen services and prices were sent to all of your customers. Have any of your customers contacted you in response to these messages?"
+        label variable q_3d_1 "[If yes] Has the customer feedback to the messages been positive or negative?"
+        label variable q_3d_2 "Overall, would you say that these marketing messages advertising Mandiri Agen services and official prices to all your customers have helped you increase your business?"
+        label variable q_3f "Overall, would you say that these marketing messages advertising Mandiri Agen services and official prices have helped you increase your business?"
+        
+        label variable q_4a "Over the last month, how much time did you spend advertising your branchless banking services to increase your business?"
+        label variable q_4b "Over the last month, how often have you approached customers to encourage them to do more branchless banking transactions? "
+        label variable q_4c_1_1 "First choice: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
+        label variable q_4c_1_2 "Second choice: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
+        label variable q_4c_1_3 "Third choice: Over the last month, which of the following strategies have you used to encourage your customers to do more branchless banking transactions"
+        label variable q_4d "Over the last month, how often do you approached customers with information about prices for BM transactions?"
+        label variable q_4e "Over the last month, how often do you approached potential new customers to encourage them to adopt Bank Mandiri financial products? "
+        label variable q_4f_1_1 "First choice: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
+        label variable q_4f_1_2 "Second choice: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
+        label variable q_4f_1_3 "Third choice: Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products?"
+        label variable q_4f_6_text "Others_text: [If yes] Over the last month, have you tried any of the following strategies to attract potential new customers to encourage them to adopt Bank Mandiri financial products? If others, please specify:"
+        
+        label variable q_5a "Since when have you been an agent for Bank Mandiri?"
+        label variable gender "What is your gender?"
+        label variable q_5c "When were you born?"
+
+        **Delete respondent who did not give informed consent and not 100 progress
+        keep if progress == "100" & informed_consent == 1
+
 
 save "$dta/04 agent_endline/agent_endline_`date'.dta", replace
