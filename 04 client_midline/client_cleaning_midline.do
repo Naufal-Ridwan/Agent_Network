@@ -121,6 +121,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
         format total_duration %9.2f
 
 ** #3. Renaming varibale
+gen q_4b_6 =. /// NEED TO DELETE THIS BEFORE RUNNING THE REAL CODE /// kemarin kelupaan digenerate dari qualtricks
 
         *q_6c_1
         forvalues i = 1/7 {
@@ -162,8 +163,8 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
         *q_6a_1
         label define q_6a_1_lbl 1 "There is an official price set by the bank and the agent has to stick to that price" ///
                  2 "There is an official price set by the bank, but the agent can charge more or less than this price " ///
-                 3 "There is no official price and the agent can decide what price to charge" 
-                 4 "The government or banking regulator sets the prices"
+                 3 "There is no official price and the agent can decide what price to charge" ///
+                 4 "The government or banking regulator sets the prices" ///
                  5 "I don't know"
         destring q_6a_1, replace
         label values q_6a_1 q_6a_1_lbl
@@ -175,8 +176,8 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 
         *q_6c_1
         label define q_6c_1_lbl 1 "Friend and family" 2 "high-value customers" 3 "New customers" 4 "Long-time customers" 5 "Poorer customers" 6 "customers from local area" 7 "Customers who can easily do business with other agents"
-        destring q_6c_1, replace
-        label values q_6c_1 q_6c_1_lbl
+        destring q_6c_1_1 q_6c_1_2 q_6c_1_3 q_6c_1_4 q_6c_1_5 q_6c_1_6 q_6c_1_7, replace
+        label values q_6c_1_1 q_6c_1_2 q_6c_1_3 q_6c_1_4 q_6c_1_5 q_6c_1_6 q_6c_1_7 q_6c_1_lbl
 
         *q_7b
         label define q_7b_lbl 1 "Yes, agent was present and helped me" 2 "No, agent was not present and i had to come back"
@@ -199,8 +200,8 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
                         5 "Transparent and displays a price list" 6 "Available every time I need for transaction" ///
                         7 "Offers the lowest price" 8 "Affiliated with the bank where I want to open an account" ///
                         9 "I trust the agent" 10 "Charges everyone the same prices"
-        destring q_8a, replace
-        label values q_8a q_8a_lbl
+        destring q_8a_1 q_8a_2 q_8a_3 q_8a_4 q_8a_5 q_8a_6 q_8a_7 q_8a_8 q_8a_9 q_8a_10, replace
+        label values q_8a_1 q_8a_2 q_8a_3 q_8a_4 q_8a_5 q_8a_6 q_8a_7 q_8a_8 q_8a_9 q_8a_10 q_8a_lbl
 
         * q_8b
         label define q_8b_lbl 1 "I would prefer to continue doing business with my regular agent, even if other agents in the area offer lower prices/fees" ///
@@ -220,7 +221,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
         label values q_9b q_9b_lbl
 
         *q_10a
-        label define q_10a_lbl 1 "There are many branchless banking agents in my area and I have a lot of options which one I want to use"
+        label define q_10a_lbl 1 "There are many branchless banking agents in my area and I have a lot of options which one I want to use" ///
                                 2 "The number of branchless banking agents in my area is limited and I do not have many options which one I want to use"
         destring q_10a, replace
         label values q_10a q_10a_lbl
@@ -247,6 +248,13 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
         label values q_12a q_12a_lbl
 
         *compensation_option
+        rename q_13a compensation_option
         label define compensation_option_lbl 1 "Indomaret" 2 "Alfamart" 3 "Tokopedia"
         destring compensation_option, replace
         label values compensation_option compensation_option_lbl
+
+        rename consent_comp_1 informed_consent
+        drop if informed_consent == "0" 
+        drop if progress != "100"
+
+save "$dta/03 client_midline/client_midline_`date'.dta", replace
