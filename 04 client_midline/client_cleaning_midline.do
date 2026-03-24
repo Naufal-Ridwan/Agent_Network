@@ -40,7 +40,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 ** IMPORT DATA **
 ******************
 
-import excel "$raw/03 client_midline/raw_client_midline_20032026.xlsx", sheet("Sheet0") firstrow
+        import excel "$raw/03 client_midline/raw_client_midline_20032026.xlsx", sheet("Sheet0") firstrow
 
 *******************
 ** DATA CLEANING **

@@ -39,7 +39,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 *IMPORT DATA*
 *************
 
-import excel "$raw/04 agent_endline/raw_agent_endline_17032026.xlsx", sheet("Sheet0") firstrow
+import excel "$raw/04 agent_endline/raw_agent_endline_24032026.xlsx", sheet("Sheet0") firstrow
 
 *****************
 * DATA CLEANING *
@@ -47,7 +47,7 @@ import excel "$raw/04 agent_endline/raw_agent_endline_17032026.xlsx", sheet("She
 
 
 ** #1. Rename and revised variable name
-ren *, lower
+        ren *, lower
 
         * Drop the first row since it's now in labels
         drop in 1
@@ -296,7 +296,6 @@ ren *, lower
         label variable q_3b_1 "[If yes] Has the customer feedback to the messages been positive or negative?"
         label variable q_3b_2 "Overall, would you say that these marketing messages advertising Mandiri Agen services and official prices to all your customers have helped you increase your business?"
         label variable q_3c "Last month, you chose to participate in a Bank Mandiri marketing plan and received messages advertising Mandiri agen services and prices. Have you forwarded these marketing messages to your customers?"
-        label variable q_3c_1 "[If yes] To how many of your customers have you forwarded or shown these marketing messages?"
         label variable q_3c_2_1_1 "First choice: [If yes] To which type of customer did you forward or show these marketing messages first?"
         label variable q_3c_2_1_2 "Second choice:[If yes] To which type of customer did you forward or show these marketing messages first?"
         label variable q_3c_2_1_3 "Third choice: [If yes] To which type of customer did you forward or show these marketing messages first?"
@@ -323,8 +322,11 @@ ren *, lower
         label variable gender "What is your gender?"
         label variable q_5c "When were you born?"
 
+        rename q_3c_1_background q_3c_1
+        label variable q_3c_1 "[If yes] To how many of your customers have you forwarded or shown these marketing messages?"
+
         **Delete respondent who did not give informed consent and not 100 progress
         keep if progress == "100" & informed_consent == 1
 
 
-save "$dta/04 agent_endline/agent_endline_`date'.dta", replace
+        save "$dta/04 agent_endline/agent_endline_`date'.dta", replace
