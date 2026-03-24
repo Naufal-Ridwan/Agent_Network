@@ -161,6 +161,11 @@ ren *, lower
         label define compensation_option_lbl 1 "Indomaret" 2 "Alfamart" 3 "Tokopedia"
         label values compensation_option compensation_option_lbl
 
+        *treatment status
+        label define treatment_status_lbl 0 "Control" 1 "Treatment 1" 2 "Treatment 2" 3 "Treatment 3" 4 "Treatment 4"
+        destring treatment_status, replace
+        label values treatment_status treatment_status_lbl
+
 ***#5. Discrete option with mup to three answer
        
        *q_1d_1_1
