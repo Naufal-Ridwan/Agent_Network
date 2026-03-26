@@ -1092,5 +1092,293 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 	restore
 	*q_6a_1
 	preserve
-	
 
+	drop if q_6a_1 == .
+	forval x = 1/5 {
+		gen gr_6a_1_`x' = 1 if q_6a_1 == `x'
+		recode gr_6a_1_`x' (. = 0)
+		replace gr_6a_1_`x' = . if q_6a_1 == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_6a_1_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("Branchless banking agents charge a fee for each transaction made with them", size(medsmall)) ///
+		subtitle("How do you think these fees are set?", size(medsmall)) ///
+		legend(order(1 "There is an official price set by the bank and the agent has to stick to that price," ///
+					2 "There is an official price set by the bank, but the agent can charge more or less than this price " ///
+					3 "There is no official price and the agent can decide what price to charge" ///
+					4 "The government or banking regulator sets the prices" ///
+					5 "Never") size(vsmall) col(1)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Baseline - `date'/40 - client_q_6a_1.png", as(png) replace
+
+	restore
+	*q_6a_2
+	preserve
+
+	drop if q_6a_2 == .
+	forval x = 1/3 {
+		gen gr_6a_2_`x' = 1 if q_6a_2 == `x'
+		recode gr_6a_2_`x' (. = 0)
+		replace gr_6a_2_`x' = . if q_6a_2 == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_6a_2_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("Branchless banking agents charge a fee for each transaction made with them", size(medsmall)) ///
+		subtitle("Do you think the fees charged by your agent are fair?", size(medsmall)) ///
+		legend(order(1 "More" 2 "Less" 3 "It depends on the client") size(vsmall) col(1)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Baseline - `date'/41 - client_q_6a_2.png", as(png) replace
+
+	restore
+	*q_6b
+	preserve
+
+	drop if q_6b == .
+	forval x = 0/1 {
+		gen gr_6b_`x' = 1 if q_6b == `x'
+		recode gr_6b_`x' (. = 0)
+		replace gr_6b_`x' = . if q_6b == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_6b_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("Does your current, most frequent Mandiri Agen", size(medsmall)) ///
+		subtitle("{bf:display} a list of prices for transactions at her shop?", size(medsmall)) ///
+		legend(order(0 "No" 1 "Yes") size(vsmall) col(2)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Baseline - `date'/42 - client_q_6b.png", as(png) replace
+
+	restore
+	*q_6c
+	preserve
+
+	drop if q_6c == .
+	forval x = 0/1 {
+		gen gr_6c_`x' = 1 if q_6c == `x'
+		recode gr_6c_`x' (. = 0)
+		replace gr_6c_`x' = . if q_6c == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_6c_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("Does you agent set the same price for everyone or not?", size(medsmall)) ///
+		subtitle(" ", size(medsmall)) ///
+		legend(order(0 "No" 1 "Yes") size(vsmall) col(2)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Baseline - `date'/43 - client_q_6c.png", as(png) replace
+
+	restore
+	*q_6c_1
+	preserve
+
+	forval y = 1/7 {
+	        gen q_6c_1_new_`y' = ///
+            q_6c_1_1_1==`y' | ///
+	        q_6c_1_1_2==`y' | ///
+            q_6c_1_1_3==`y'
+    }
+
+    set scheme jpalfull
+    qui sum agents_n if q_6c_1_new_1 !=.
+
+    graph bar q_6c_1_new_*, percentages ///
+            ytitle("%", size(small)) ///
+            ylabel(, labsize(small)) ///
+            blabel(bar, pos(center) size(vsmall) format(%15.1fc)) ///
+            title("Type of client charge with low fees?", size(medsmall)) ///
+            legend(order(1 "Friends and Family" 2 "High-value customers" 3 "New customers" 4 "Long-term customers" ///
+						5 "Lower-income customers" 6 "Local customers" 7 "Can switch agents") ///
+            size(small) col(3)) ///
+            note("Total agents = `: di %6.0fc `r(N)''", size(medsmall))
+    graph export "$output/04 agent_endline/Client Midline - `date'/1 - q_6c_1.png", as(png) replace
+
+***# SECTION 7: Latest Transaction Experience with BM Agent #***
+
+	restore
+	*q_7a
+	preserve
+
+	
+	destring q_7a, replace
+	drop if q_7a == .
+	qui summarize q_7a, detail
+	return list
+	local total_before = r(N)
+
+	** Detect and drop outlier(s)
+	generate iqr = r(p75) - r(p25)
+	generate lower_limit = 0
+	generate upper_limit = r(p75) + 1.5 * iqr
+	generate outlier = (q_7a < lower_limit) | (q_7a > upper_limit)
+	drop if outlier == 1
+
+	** Store obs number after dropping outlier(s) and compute the difference
+	qui summarize q_7a, detail
+	local total_after = r(N)
+	local dropped_obs = `total_before' - `total_after'
+	
+	** Store lower and upper threshold
+	qui su lower_limit, det
+	local ll = round(`r(mean)', 1)
+	qui su upper_limit, det
+	local ul = round(`r(mean)', 1)
+
+	* Histogram
+	set scheme plotplain
+
+	histogram q_7a, percent color(chocolate*0.95) ///
+		discrete ///
+		xlabel(0(1)10) ///
+		ylabel(0(5)40) ///
+		xtitle("Satisfaction level", size(medsmall)) ///
+		ytitle("Percentage (%) of clients", size(medsmall)) ///
+		title("For the latest transaction you did with your {bf:BM Agent},", size(medsmall)) ///
+		subtitle("on a scale of 1 to 10, {bf:how satisfied} were you with the service?", size(medsmall)) ///
+		note("Note:" "Total clients = `: di %6.0fc `r(N)''" "Outlier threshold = `ll' (lower) and `ul' (upper)" "Dropped outlier observation = `dropped_obs'", size(medsmall))
+	
+	graph export "$output/Client Midline - `date'/26 - client_q_7a_hist.png", as(png) replace
+
+	restore
+	*q_7b
+	preserve
+
+	drop if q_7b == .
+	forval x = 0/1 {
+		gen gr_7b_`x' = 1 if q_7b == `x'
+		recode gr_7b_`x' (. = 0)
+		replace gr_7b_`x' = . if q_7b == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_7b_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("Was the agent present when you first attempted the transaction?", size(medsmall)) ///
+		subtitle(" ", size(medsmall)) ///
+		legend(order(0 "No, agent was not present and i had to come back" 1 "Yes, agent was present and helped me") size(vsmall) col(1)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Midline - `date'/27 - client_q_7b.png", as(png) replace
+
+	restore
+	*q_7c
+	preserve
+
+	drop if q_7c == .
+	forval x = 0/1 {
+		gen gr_7c_`x' = 1 if q_7c == `x'
+		recode gr_7c_`x' (. = 0)
+		replace gr_7c_`x' = . if q_7c == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_7c_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("Did you have to come back another day to complete the transaction?", size(medsmall)) ///
+		subtitle(" ", size(medsmall)) ///
+		legend(order(0 "No" 1 "Yes") size(vsmall) col(2)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Midline - `date'/28 - client_q_7c.png", as(png) replace
+	
+	restore
+	*q_7d
+	preserve
+
+	drop if q_7d == .
+	forval x = 1/5 {
+		gen gr_7d_`x' = 1 if q_7d == `x'
+		recode gr_7d_`x' (. = 0)
+		replace gr_7d_`x' = . if q_7d == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_7d_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("How long did you have to wait at the agent until your transaction was processed?", size(medsmall)) ///
+		subtitle(" ", size(medsmall)) ///
+		legend(order(1 "There was no wait time, agent helped me right away" 2 "5-10 minutes" 3 "10-15 minutes" ///
+					4 "15-30 minutes" 5 "30-45 minutes") size(vsmall) col(2)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Midline - `date'/29 - client_q_7d.png", as(png) replace
+
+	restore
+	*q_7e
+	preserve
+
+	drop if q_7e == .
+	forval x = 1/4 {
+		gen gr_7e_`x' = 1 if q_7e == `x'
+		recode gr_7e_`x' (. = 0)
+		replace gr_7e_`x' = . if q_7e == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_7e_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("How many times did you have to visit the agent", size(medsmall)) ///
+		subtitle("until the transaction you wanted to make was successful?", size(medsmall)) ///
+		legend(order(1 "Transaction was processed on first visit" 2 "2 times" 3 "3 times" 4 "4 times") size(vsmall) col(2)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Midline - `date'/30 - client_q_7e.png", as(png) replace
+
+	restore
+	*q_7f
+	preserve
+
+	drop if q_7f == .
+	forval x = 0/1 {
+		gen gr_7f_`x' = 1 if q_7f == `x'
+		recode gr_7f_`x' (. = 0)
+		replace gr_7f_`x' = . if q_7f == .
+	}
+
+	set scheme jpalfull
+	qui sum clients_n
+
+	graph bar gr_7f_*, percentages /// percent is the default
+		ytitle("Percentage (%) of clients", size(medsmall) orientation(vertical)) ///
+		ylabel(0(10)50) ///
+		blabel(bar, pos(top) size(medsmall) format(%15.1fc)) ///
+		title("Did the agent clearly tell you the amount of the fee", size(medsmall)) ///
+		subtitle("they would charged in addition to the transaction amount?", size(medsmall)) ///
+		legend(order(0 "No" 1 "Yes") size(vsmall) col(2)) ///
+		note("Total clients = `: di %6.0fc `r(N)''", size(small))
+	graph export "$output/Client Midline - `date'/31 - client_q_7f.png", as(png) replace
+
+***# SECTION 8: Important agent characteristic #***
