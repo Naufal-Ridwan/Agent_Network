@@ -911,7 +911,7 @@ preserve
 		gen gr_2b_`x' = 1 if q_2b == `x'
 		recode gr_2b_`x' (. = 0)
 		replace gr_2b_`x' = . if q_2b == .
-}
+	}
 	set scheme jpalfull
 	qui sum clients_n 
 
