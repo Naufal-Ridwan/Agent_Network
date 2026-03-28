@@ -257,4 +257,100 @@ gen q_4b_6 =. /// NEED TO DELETE THIS BEFORE RUNNING THE REAL CODE /// kemarin k
         drop if informed_consent == "0" 
         drop if progress != "100"
 
+** #4. Change variable labels
+        
+        * ---- Q1: Deposits ----
+        la var q_1a   "When was the last time you did a cash deposit with BM Agent?"
+        la var q_1a_1 "In your last transaction with BM Agent, how much did you deposit?"
+        la var q_1a_2 "Last transaction fee charged by BM Agent for a cash deposit"
+        la var q_1a_3 "Approximate transaction fee charged by BM Agent for last cash deposit"
+        la var q_1a_4 "Last 3 months, how many deposits have you made with BM Agent?"
+        la var q_1b   "When was the last time you did a cash deposit with a non-BM Agent?"
+        la var q_1b_1 "In your last transaction with a non-BM Agent, how much did you deposit?"
+        la var q_1b_2 "Last 3 months, how many deposits have you made with a non-BM Agent?"
+
+        * ---- Q2: Withdrawals ----
+        la var q_2a   "When was the last time you did a cash withdrawal with BM Agent?"
+        la var q_2a_1 "In your last transaction with BM Agent, how much did you withdraw?"
+        la var q_2a_2 "Last transaction fee charged by BM Agent for a cash withdrawal"
+        la var q_2a_3 "Approximate transaction fee charged by BM Agent for last cash withdrawal"
+        la var q_2a_4 "Last 3 months, how many withdrawals have you made with BM Agent?"
+        la var q_2b   "When was the last time you did a cash withdrawal with a non-BM Agent?"
+        la var q_2b_1 "In your last transaction with a non-BM Agent, how much did you withdraw?"
+        la var q_2b_2 "Last 3 months, how many withdrawals have you made with a non-BM Agent?"
+
+        * ---- Q3: Trust ----
+        la var q_3a   "Views on BM Agent & BM: confidence in banks"
+        la var q_3b   "Views on BM Agent & BM: confidence in BM"
+        la var q_3c   "Views on BM Agent & BM: confidence in BM agent"
+        la var q_3d   "Views on BM Agent & BM: confidence that BM Agent will give the best price"
+
+         * ---- Q4: Beliefs about bank versus agent ----
+        la var q_4a_1   "Agree/no: my BM Agent is honest and trustworthy"
+        la var q_4a_2   "Agree/no: my BM Agent puts cust well-being above profits"
+        la var q_4a_3   "Agree/no: my BM Agent treats all cust equally well"
+        la var q_4a_4   "Agree/no: my BM Agent is transparent about pricing"
+        la var q_4a_5   "Agree/no: my BM Agent does his/her job well"
+        la var q_4a_6   "Agree/no: my BM Agent offers reliable service"
+        la var q_4b_1   "Agree/no: BM is honest and trustworthy"
+        la var q_4b_2   "Agree/no: BM puts cust well-being above profits"
+        la var q_4b_3   "Agree/no: BM treats all cust equally well"
+        la var q_4b_4   "Agree/no: BM is transparent about pricing"
+        la var q_4a_5   "Agree/no: my BM Agent does his/her job well"
+        la var q_4b_6   "Agree/no: BM offers reliable service"
+
+        * ---- Q5: Agent outreach / marketing ----
+        la var q_5a "How much time did your BM Agent spend advertising his services last month?"
+        la var q_5b "Agree/no: BM Agent did all to convince people to adopt BM Agent products last mo"
+        la var q_5c "Has your BM Agent approached you to do more agent transactions last month?"
+        la var q_5d "Has your BM Agent approached you to adopt new BM financial products last month?"
+        la var q_5e "Has your BM Agent approached you w/ new info abt BM transaction fees last month?"
+        
+        * ---- Q6: Pricing & fairness ----
+        la var q_6a        "How do you think banking agents set a fee for each transaction?"
+        la var q_6a_1      "Does the agent typically charge more or less than official price?"
+        la var q_6b        "Does your BM Agent display the official price at his/her shop?"
+        la var q_6c        "Does your BM Agent set the same price for everyone?"
+        la var q_6c_1_1_1  "Who pays less: first choice"
+        la var q_6c_1_1_2  "Who pays less: second choice"
+        la var q_6c_1_1_3  "Who pays less: third choice"
+
+       * ---- Q7: Agents quality ----
+        destring q_4 q_4_a q_4_b q_4_c q_4_d q_4_e, replace
+        lab val q_4 .
+        la var q_7a "How satisfied were you with your BM Agent service (last transaction)?"
+        la var q_7b "Was the agent present when you first attempted the transaction?"
+        la var q_7c "Was the agent able to complete the exact transaction you wanted to do?"
+        la var q_7d "How long did you have to wait at the agent until your transaction was processed?"
+        la var q_7e "How many times did you have to visit the agent until the transaction you wanted to make was successful?"
+        la var q_7f "Did the agent clearly tell you the amount of the fee they would charged in addition to the transaction amount?"
+
+        * ---- Q9: Client perception on fairness ----
+        la var q_9a "My reaction if my BM Agent charged other cust a lower fee than me"
+        la var q_9b "My reaction if my BM Agent charged me 50% higher than other cust"
+        la var q_9c "Preference to do a regular transaction when there are only two agents"
+
+        
+        
+      
+        
+        
+        
+       
+        
+        * ---- Q11: Market structure ----
+        la var q_11a    "Which of the following statements do you agree with most?"
+        la var q_11b    "How many branchless banking agents are in your area?"
+
+        * ---- Q12: Relationship & profile ----
+        la var q_12a_1  "Since when have you been doing transactions with your BM Agent?"
+        la var q_12b    "For how long have you known your BM Agent?"
+        la var q_12c    "How often do you talk with your BM Agent?"
+        la var q_12d    "What % of your overall agent transactions do you do with your BM Agent?"
+        la var q_12e    "Which of the following best describes ur opinion abt banking agents in general?"
+        la var q_12f    "Imagine a ladder with 10 steps. In which step do you think you are?"
+        la var q_12g    "How would you describe your cust profile when it comes to financial services?"
+        la var q_12h    "Do you use BM Agent to send or receive business payments?"
+        la var q_12i    "Do you use BM Agent to receive salary payments?"
+
 save "$dta/03 client_midline/client_midline_`date'.dta", replace
