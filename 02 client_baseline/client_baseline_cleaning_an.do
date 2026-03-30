@@ -31,7 +31,7 @@ if "`c(username)'" == "athonaufalridwan" {
 
 * Set the path
 gl do            "$path/06 Survey Data/dofiles/client_baseline"
-gl dta           "$path/06 Survey Data/dtafiles/01 client_baseline"
+gl dta           "$path/06 Survey Data/dtafiles"
 gl log           "$path/06 Survey Data/logfiles"
 gl output        "$path/06 Survey Data/output"
 gl raw           "$path/06 Survey Data/rawresponses"
@@ -47,7 +47,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 *******************************************
 *import excel "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFII Agent Banking Network (BM)/06 Data/c Full-Scale/06 Survey Data/rawresponses/raw_client_baseline_02022026", sheet("Sheet0") firstrow
 
-import excel "$raw/01 client_baselineraw_client_baseline_17032026.xlsx", sheet("Sheet0") firstrow
+import excel "$raw/01 client_baseline/raw_client_baseline_30032026.xlsx", sheet("Sheet0") firstrow
 
 *import excel "/Users/athonaufalridwan/Downloads/01. J-PAL SEA/Random File/AN/client/raw_client_baseline_26012026.xlsx", sheet("Sheet0") firstrow clear
 
@@ -467,10 +467,7 @@ label define q_3c_1_1_lbl 1 "Friends & Family" 2 "High-value customers" 3 "" ///
     7 "Local customers" 8 "Can switch agents", replace
 label values q_3c_1_1_1 q_3c_1_1_2 q_3c_1_1_8 q_3c_1_1_4 q_3c_1_1_5 q_3c_1_1_6 q_3c_1_1_7 q_3c_1_1_lbl
 
-
-
 **#15. Cleaning q_5a  ----
-
 
 /*gen q_5a_11 = .
 gen q_5a_12 = .
@@ -497,8 +494,10 @@ lab var total_duration "Duration (in minutes)"
 
 rename externalreference unique_code_client
 
-append using "$dta/cleaned_baseline_client_survey_23022026_temp.dta", force
+append using "$dta/01 client_baseline/cleaned_baseline_client_survey_17032026.dta", force
+duplicates drop unique_code_client, force // I found 213 client code duplicates, mostly from the 30 march raw dataset.
+// so ther basically there are no additional responses recieved.
 
 **#14. Save cleaned data
-save "$dta/cleaned_baseline_client_survey_`date'.dta", replace
-*export delimited using "$dta/cleaned_baseline_client_survey_`date'.csv", replace
+save "$dta/01 client_baseline/cleaned_baseline_client_survey_`date'.dta", replace
+*export delimited using "$dta/01 client_baseline/cleaned_baseline_client_survey_`date'.csv", replace

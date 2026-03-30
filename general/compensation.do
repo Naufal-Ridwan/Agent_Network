@@ -41,13 +41,14 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 **************************************
 **----------AGENT COMPENSATION------**
 
-use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_23022026.dta", clear
+use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_16032026.dta", clear
 	sort enddate
 	keep unique_code_agent compensation_option q_7a
-	
-	replace compensation_option = "Indomaret" if compensation_option == "1"
-	replace compensation_option = "Alfamart" if compensation_option == "2"
-	replace compensation_option = "Tokopedia" if compensation_option == "3"
+	lab var compensation_option "Compensation option"
+
+	destring compensation_option, replace
+	label define comp_opt 1 "Indomaret 1" 2 "Alfamart" 3 "Tokopedia", replace
+	label values compensation_option comp_opt
 
 	rename compensation_option Merchant
 	lab var Merchant "Merchant"
@@ -72,20 +73,17 @@ use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_23022026.dta", clear
 	replace unique_code_agent = unique_code_agent_final if unique_code_agent_final != ""
 	drop split_order unique_code_agent_final
 	
-export excel using "$path/06 Survey Data/output/Agent_compensation_Phase1", firstrow(varlabels) replace
+export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation", firstrow(varlabels) replace
 
 **************************************
 **----------CLIENT COMPENSATION------**
 *Data from 02 February 2026
-use "$dta/01 client_baseline/cleaned_baseline_client_survey_23022026.dta", clear
+use "$dta/01 client_baseline/cleaned_baseline_client_survey_30032026.dta", clear
 
 	keep enddate q_13a unique_code_client
 
 	rename q_13a compensation_option
 	lab var compensation_option "Compensation option"
-	replace compensation_option = "Indomaret" if compensation_option == 1
-	replace compensation_option = "Alfamart" if compensation_option == 2
-	replace compensation_option = "Tokopedia" if compensation_option == 3
 
 	rename compensation_option Merchant
 	lab var Merchant "Merchant"
@@ -99,7 +97,7 @@ use "$dta/01 client_baseline/cleaned_baseline_client_survey_23022026.dta", clear
 	order unique_code_client, last
 	drop n
 
-export excel using "$path/06 Survey Data/output/Client_compensation_Phase1", firstrow(varlabels) replace
+export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation", firstrow(varlabels) replace
 
 
 
