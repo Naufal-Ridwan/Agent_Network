@@ -76,7 +76,7 @@ use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_16032026.dta", clear
 
 	drop if n >8000
 	drop n q_7a
-	
+0
 export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation_1.xlsx", firstrow(varlabels) replace
 
 	use `agent_compensation', clear
@@ -84,7 +84,7 @@ export excel using "$path/06 Survey Data/output/compensation/agent_baseline_comp
 	*Generating 8000 respondent for second wave of voucher
 	keep if n >= 8001
 	drop n q_7a
-	
+
 export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation_2.xlsx", firstrow(varlabels) replace
 
 
@@ -111,32 +111,49 @@ use "$dta/01 client_baseline/cleaned_baseline_client_survey_30032026.dta", clear
 	replace Merchant = cond(`r' <= 1/3, "Indomaret", cond(`r' <= 2/3, "Alfamart", "Tokopedia")) if Merchant == ""
 	
 	gen n = _n
+	order Merchant, first
+	order unique_code_client, last
+	keep Merchant unique_code_client Nominal n
 	tempfile client_compensation
 	save `client_compensation'
-	order unique_code_client, last
-	
+
 	*keep 9000 respondents for first wave of voucher
-	drop if n >9000
-	drop enddate n
+	drop if n >5000
+	drop n
 	
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_1.xlsx", firstrow(varlabels) replace
+export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_1.xlsx", firstrow(varlabels) replace
 
 	use `client_compensation', clear
 
 	*generate 9000 respondents for second wave of voucher
-	keep if n >= 9001 & n <= 18000
-	drop enddate n
+	keep if n >= 5001 & n <= 10000
+	drop n
 
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_2.xlsx", firstrow(varlabels) replace
+export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_2.xlsx", firstrow(varlabels) replace
 
 	use `client_compensation', clear
 
 	*generate 18001 respondents for second wave of voucher
-	keep if n >= 18001
-	drop enddate n
+	keep if n >= 10001 & n <= 15000
+	drop n
 
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_3.xlsx", firstrow(varlabels) replace
+export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_1.xlsx", firstrow(varlabels) replace
 
+	use `client_compensation', clear
+
+	*generate 18001 respondents for second wave of voucher
+	keep if n >= 15001 & n <= 20000
+	drop n
+
+export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_2.xlsx", firstrow(varlabels) replace
+
+	use `client_compensation', clear
+
+	*generate 18001 respondents for second wave of voucher
+	keep if n >= 20001
+	drop n
+
+export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d3_1.xlsx", firstrow(varlabels) replace
 
 
 
