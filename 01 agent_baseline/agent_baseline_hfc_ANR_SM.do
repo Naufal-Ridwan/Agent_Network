@@ -44,7 +44,7 @@ local date : di %tdDNCY daily("$S_DATE", "DMY") //this is the default code, it w
 *************
 *IMPORT DATA*
 *************
-use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_`date'.dta", clear 		
+use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_16032026.dta", clear 		
 
 *************
 *HFC*

@@ -279,9 +279,9 @@ preserve
 	import delimited "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFII Agent Banking Network (BM)/06 Data/c Full-Scale/09 Contact List/contact_list_clients_final_v2.csv", clear    
 	rename kode_unik_survei_agen unique_code_agent
 	rename externaldatareference unique_code_client
+	rename unique_code_client unique_code_nasabah
 
 	keep unique_code_agent unique_code_client cust_code_agen cust_code_nasabah
-	rename unique_code_client unique_code_nasabah
 	merge m:1 unique_code_agent using `agen_zeroresponse_client'
 	keep if _merge == 3
 	drop _merge

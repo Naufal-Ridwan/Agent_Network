@@ -70,24 +70,42 @@ use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_16032026.dta", clear
 	replace unique_code_agent = unique_code_agent_final if unique_code_agent_final != ""
 	drop split_order unique_code_agent_final
 
-	gen n = _n
 	tempfile agent_compensation
 	save `agent_compensation'
 
-	drop if n >8000
-	drop n q_7a
-0
-export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation_1.xlsx", firstrow(varlabels) replace
+	drop if Nominal == 5000
 
+	gen n = _n
+	drop if n >5000
+	drop n q_7a
+	replace unique_code_agent = "001_" + unique_code_agent
+
+	*First 5000 agent
+	export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation(50000)_1.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	
+	putexcel set "$path/06 Survey Data/output/compensation/agent_baseline_compensation(50000)_1.xlsx", modify
+
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
+
+	*Second 5000 agent
 	use `agent_compensation', clear
-
-	*Generating 8000 respondent for second wave of voucher
-	keep if n >= 8001
+	drop if Nominal == 5000
+	gen n = _n
+	keep if n >= 5001 & n <= 10000
 	drop n q_7a
+	replace unique_code_agent = "001_" + unique_code_agent
 
-export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation_2.xlsx", firstrow(varlabels) replace
+	export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation(50000)_2.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	
+	putexcel set "$path/06 Survey Data/output/compensation/agent_baseline_compensation(50000)_2.xlsx", modify
 
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
 
+0
 **************************************
 **----------CLIENT COMPENSATION------**
 *Data from 02 February 2026
