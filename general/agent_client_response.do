@@ -64,7 +64,8 @@ import delimited "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFI
 	rename externaldatareference unique_code_client
 	keep unique_code_agent unique_code_client cust_code_agen cust_code_nasabah
 	rename unique_code_client unique_code_nasabah
-	merge 1:1 unique_code_nasabah using `client_response'
+	merge m:1 unique_code_agent using `agent_response'
+0	
 	keep if _merge ==3
 	drop _merge
 

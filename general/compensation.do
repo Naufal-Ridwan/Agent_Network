@@ -105,7 +105,39 @@ use "$dta/02 agent_baseline/cleaned_baseline_agent_survey_16032026.dta", clear
 	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
 	putexcel A2 = ("")
 
-0
+	*Remaining 147 agent
+	use `agent_compensation', clear
+	drop if Nominal == 5000
+	gen n = _n
+	keep if n >= 10001
+	drop n q_7a
+	replace unique_code_agent = "001_" + unique_code_agent
+
+	export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation(50000)_3.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	
+	putexcel set "$path/06 Survey Data/output/compensation/agent_baseline_compensation(50000)_3.xlsx", modify
+
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
+
+	*Agent recieved additional IDR5000 compensation
+	use `agent_compensation', clear
+	drop if Nominal == 50000
+	drop q_7a
+	replace unique_code_agent = "001_" + unique_code_agent
+
+	export excel using "$path/06 Survey Data/output/compensation/agent_baseline_compensation(5000).xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	
+	putexcel set "$path/06 Survey Data/output/compensation/agent_baseline_compensation(5000).xlsx", modify
+
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
+
+
+
+
 **************************************
 **----------CLIENT COMPENSATION------**
 *Data from 02 February 2026
@@ -135,44 +167,61 @@ use "$dta/01 client_baseline/cleaned_baseline_client_survey_30032026.dta", clear
 	tempfile client_compensation
 	save `client_compensation'
 
-	*keep 9000 respondents for first wave of voucher
+	*keep 5000 respondents for first wave of voucher
 	drop if n >5000
 	drop n
+
+	export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_1.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
 	
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_1.xlsx", firstrow(varlabels) replace
+	putexcel set "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_1.xlsx", modify
 
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
+
+	*generate 5000 respondents for second wave of voucher
 	use `client_compensation', clear
-
-	*generate 9000 respondents for second wave of voucher
 	keep if n >= 5001 & n <= 10000
 	drop n
 
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_2.xlsx", firstrow(varlabels) replace
-
+	export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_2.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	putexcel set "$path/06 Survey Data/output/compensation/client_baseline_compensation_d1_2.xlsx", modify
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
+	
+	*generate 10001 respondents for second wave of voucher
 	use `client_compensation', clear
-
-	*generate 18001 respondents for second wave of voucher
 	keep if n >= 10001 & n <= 15000
 	drop n
 
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_1.xlsx", firstrow(varlabels) replace
-
-	use `client_compensation', clear
+	export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_1.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	putexcel set "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_1.xlsx", modify
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
 
 	*generate 18001 respondents for second wave of voucher
+	use `client_compensation', clear
 	keep if n >= 15001 & n <= 20000
 	drop n
 
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_2.xlsx", firstrow(varlabels) replace
-
-	use `client_compensation', clear
+	export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_2.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	putexcel set "$path/06 Survey Data/output/compensation/client_baseline_compensation_d2_2.xlsx", modify
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
 
 	*generate 18001 respondents for second wave of voucher
+	use `client_compensation', clear	
 	keep if n >= 20001
 	drop n
 
-export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d3_1.xlsx", firstrow(varlabels) replace
-
+	export excel using "$path/06 Survey Data/output/compensation/client_baseline_compensation_d3.xlsx", ///
+    firstrow(varlabels) cell(A3) replace
+	putexcel set "$path/06 Survey Data/output/compensation/client_baseline_compensation_d3.xlsx", modify
+	putexcel A1 = ("UPLOAD VOUCHER IAK"), bold
+	putexcel A2 = ("")
 
 
 
