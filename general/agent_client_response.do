@@ -68,7 +68,6 @@ import delimited "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFI
 0	
 	keep if _merge ==3
 	drop _merge
-
 	
 	merge m:1 unique_code_agent using `agent_response', force
 	drop if _merge== 1
@@ -80,7 +79,7 @@ import delimited "/Users/athonaufalridwan/Library/CloudStorage/Dropbox/J-PAL IFI
 	capture mkdir "$output/Agent-Client_`date'"
 	
 save "$output/Agent-Client_`date'/agent-client response.dta", replace
-	
+0	
 preserve
 *** Generating Agnet - Client distribution 
 	

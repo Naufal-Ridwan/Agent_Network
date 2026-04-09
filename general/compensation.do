@@ -3,7 +3,6 @@
 * Currently cleaning the benchtest survey
 * Author: Muthia
 * Last modified: 17 Agustus 2025
-* Last modified by: Muthia
 * Stata version: 16
 *===================================================*
 
